@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect } from "react";
+import { getImagesApi } from "./api/images-api";
+import { useState } from "react";
+import ImageGallery from "./components/ImageGallery/ImageGallery";
+import SearchBar from "./components/SearchBar/SearchBar";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [images, setImages] = useState([]);
+  const [query, setQuery] = useState("");
+  // const [page, setPage] = useState(1);
+  // const [isLoader, setLoader] = useState(false);
+  // const [error, setError] = useState(false);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const images = await getImagesApi(query);
+        setImages((prevImages) => [...prevImages, ...images]);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    query && fetchData();
+  }, [query]);
+
+  const handleSubmit = (query) => {
+    setQuery(query);
+    setImages([]);
+  };
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <SearchBar onSubmit={handleSubmit} />
+      {images.length && <ImageGallery images={images} />}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
