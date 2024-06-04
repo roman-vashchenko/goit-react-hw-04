@@ -4,8 +4,8 @@ const ImageCard = ({ img }) => {
       <img
         src={img.urls.small}
         alt={img.urls.description}
-        width={385}
-        height={320}
+        width={350}
+        height={290}
       />
     </div>
   );
