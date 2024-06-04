@@ -23,8 +23,8 @@ function App() {
       try {
         setError(false);
         setLoader(true);
+        setShowBtn(false);
         const data = await getImagesApi(query, page);
-        console.log(data);
         setImages((prevImages) => [...prevImages, ...data.results]);
         setShowBtn(data.total_pages && data.total_pages !== page);
       } catch (e) {
