@@ -6,6 +6,7 @@ import SearchBar from "./components/SearchBar/SearchBar";
 import Loader from "./components/Loader/Loader";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+import ImageModal from "./components/ImageModal/ImageModal";
 
 function App() {
   const [images, setImages] = useState([]);
@@ -14,6 +15,8 @@ function App() {
   const [isLoader, setLoader] = useState(false);
   const [showBtn, setShowBtn] = useState(false);
   const [error, setError] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,13 +46,32 @@ function App() {
   const hendleLoadMore = () => {
     setPage(page + 1);
   };
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+
+  const handleOpenModal = (img) => {
+    setIsOpen(true);
+    setImage(img);
+  };
+
   return (
     <>
       <SearchBar onSubmit={handleSubmit} />
       {error && <ErrorMessage />}
-      {images.length > 0 && <ImageGallery images={images} />}
+      {images.length > 0 && (
+        <ImageGallery images={images} openModal={handleOpenModal} />
+      )}
       {isLoader && <Loader />}
       {showBtn && <LoadMoreBtn onClick={hendleLoadMore} />}
+      {modalIsOpen && (
+        <ImageModal
+          isOpen={modalIsOpen}
+          onClose={handleCloseModal}
+          image={image}
+        />
+      )}
     </>
   );
 }
