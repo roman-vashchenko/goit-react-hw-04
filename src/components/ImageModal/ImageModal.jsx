@@ -6,14 +6,14 @@ ReactModal.setAppElement("#root");
 
 const customStyles = {
   content: {
-    top: "54%",
+    top: "55%",
     left: "50%",
     right: "auto",
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     width: "1200px",
-    height: "700px",
+    height: "650px",
     overflow: "hidden",
     padding: "0",
     border: "none",
