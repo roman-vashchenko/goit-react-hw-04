@@ -1,4 +1,4 @@
-const ImageCard = ({ img }) => {
+const ImageCard = ({ img, openModal }) => {
   return (
     <div>
       <img
@@ -6,6 +6,9 @@ const ImageCard = ({ img }) => {
         alt={img.urls.description}
         width={350}
         height={290}
+        onClick={() => {
+          openModal(img);
+        }}
       />
     </div>
   );
